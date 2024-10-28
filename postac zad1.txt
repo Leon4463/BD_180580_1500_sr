@@ -1,0 +1,28 @@
+> create table postac (
+                         -> id_postaci int auto_increment,
+                         -> nazwa varchar(40),
+                         -> rodzaj ENUM( 'wiking', 'ptak', 'kobieta' ),
+                         -> data_ur DATE,
+                         -> wiek INT UNSIGNED
+                         -> );
+
+ INSERT INTO postac (nazwa, rodzaj, data_ur, wiek)
+     -> VALUES ('Drozd', 'ptak', '1899-02-02', 1);
+
+ INSERT INTO postac (nazwa, rodzaj, data_ur, wiek) 
+        VALUES ('Tesciowa', 'kobieta', '1732-02-02', 89);
+
+
+MySQL  localhost:3306 ssl  nauka  SQL > update postac set wiek=88
+                                      -> where id_postaci=3;
+Query OK, 1 row affected (0.0060 sec)
+
+Rows matched: 1  Changed: 1  Warnings: 0
+ MySQL  localhost:3306 ssl  nauka  SQL > select * from postac ;
++------------+----------+---------+------------+------+
+| id_postaci | nazwa    | rodzaj  | data_ur    | wiek |
++------------+----------+---------+------------+------+
+|          1 | Bjorn    | wiking  | 1899-01-01 |   38 |
+|          2 | Drozd    | ptak    | 1899-02-02 |    1 |
+|          3 | Tesciowa | kobieta | 1732-02-02 |   88 |
++------------+----------+---------+------------+------+
