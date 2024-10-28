@@ -1,0 +1,37 @@
+> CREATE TABLE izba ( adres_budynku VARCHAR(100), nazwa_izby VARCHAR(50), metraz INT UNSIGNED, wlasciciel INT, PRIMARY KEY (adres_budynku, nazwa_izby), FOREIGN KEY (wlasciciel) REFERENCES postac (id_postaci) ON DELETE SET NULL);
+Query OK, 0 rows affected (0.0429 sec)
+ MySQL  localhost:3306 ssl  nauka  SQL > ALTER TABLE izba ADD kolor_izby VARCHAR(30) DEFAULT 'czarny' AFTER metraz;
+Query OK, 0 rows affected (0.0145 sec)
+
+Records: 0  Duplicates: 0  Warnings: 0
+ MySQL  localhost:3306 ssl  nauka  SQL > DESC izba
+                                      -> ;
++---------------+--------------+------+-----+---------+-------+
+| Field         | Type         | Null | Key | Default | Extra |
++---------------+--------------+------+-----+---------+-------+
+| adres_budynku | varchar(100) | NO   | PRI | NULL    |       |
+| nazwa_izby    | varchar(50)  | NO   | PRI | NULL    |       |
+| metraz        | int unsigned | YES  |     | NULL    |       |
+| kolor_izby    | varchar(30)  | YES  |     | czarny  |       |
+| wlasciciel    | int          | YES  | MUL | NULL    |       |
++---------------+--------------+------+-----+---------+-------+
+5 rows in set (0.0017 sec)
+ MySQL  localhost:3306 ssl  nauka  SQL > INSERT INTO izba (adres_budynku, nazwa_izby, metraz, kolor_izby, wlascicel)
+                                      -> VALUES (
+                                      -> 'jana pawła 2',
+                                      -> 'spizarnia',
+                                      -> 21,
+                                      -> 'zółty',
+                                      -> 1);
+ERROR: 1054 (42S22): Unknown column 'wlascicel' in 'field list'
+ MySQL  localhost:3306 ssl  nauka  SQL > INSERT INTO izba (adres_budynku, nazwa_izby, metraz, kolor_izby, wlasciciel)  VALUES ( 'jana pawła 2', 'spizarnia', 21, 'zółty', 1);
+Query OK, 1 row affected (0.0020 sec)
+
+ MySQL  localhost:3306 ssl  nauka  SQL > SELECT * FROM izba;
++---------------+------------+--------+------------+------------+
+| adres_budynku | nazwa_izby | metraz | kolor_izby | wlasciciel |
++---------------+------------+--------+------------+------------+
+| jana pawła 2  | spizarnia  |     21 | zółty      |          1 |
++---------------+------------+--------+------------+------------+
+1 row in set (0.0005 sec)
+ MySQL  localhost:3306 ssl  nauka  SQL >
