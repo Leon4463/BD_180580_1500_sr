@@ -1,0 +1,41 @@
+CREATE TABLE walizka ( id_walizki INT AUTO_INCREMENT, pojemnosc INT UNSIGNED, kolor ENUM ('rozowy', 'czerwony', 'teczowy', 'zolty' ), id_wlasciciela INT, PRIMARY KEY (id_walizki),  FOREIGN KEY (id_wlasciciela) REFERENCES postac(id_postaci) ON DELETE CASCADE);
+Query OK, 0 rows affected (0.0344 sec)
+ MySQL  localhost:3306 ssl  nauka  SQL > ALTER TABLE walizka
+                                      -> MODIFY kolor ENUM(
+                                      -> 'rozowy', 'czerwony', 'teczowy', 'zolty') DEFAULT 'rozowy';
+Query OK, 0 rows affected (0.0151 sec)
+
+Records: 0  Duplicates: 0  Warnings: 0
+ MySQL  localhost:3306 ssl  nauka  SQL > SELECT * FROM walizka;
+Empty set (0.0004 sec)
+ MySQL  localhost:3306 ssl  nauka  SQL > DESC walizka;
++----------------+---------------------------------------------+------+-----+---------+----------------+
+| Field          | Type                                        | Null | Key | Default | Extra          |
++----------------+---------------------------------------------+------+-----+---------+----------------+
+| id_walizki     | int                                         | NO   | PRI | NULL    | auto_increment |
+| pojemnosc      | int unsigned                                | YES  |     | NULL    |                |
+| kolor          | enum('rozowy','czerwony','teczowy','zolty') | YES  |     | rozowy  |                |
+| id_wlasciciela | int                                         | YES  | MUL | NULL    |                |
++----------------+---------------------------------------------+------+-----+---------+----------------+
+4 rows in set (0.0012 sec)
+ MySQL  localhost:3306 ssl  nauka  SQL > INSERT INTO walizka (pojemnosc, kolor, id_wlasciciela) VALUES (
+                                      -> 5, zolty, 1 );
+ERROR: 1054 (42S22): Unknown column 'zolty' in 'field list'
+ MySQL  localhost:3306 ssl  nauka  SQL > INSERT INTO walizka (pojemnosc, kolor, id_wlasciciela) VALUES ( 5, 'zolty', 1 );
+Query OK, 1 row affected (0.0059 sec)
+ MySQL  localhost:3306 ssl  nauka  SQL > SELECT * FROM walizka;
++------------+-----------+-------+----------------+
+| id_walizki | pojemnosc | kolor | id_wlasciciela |
++------------+-----------+-------+----------------+
+|          1 |         5 | zolty |              1 |
++------------+-----------+-------+----------------+
+1 row in set (0.0003 sec)
+ MySQL  localhost:3306 ssl  nauka  SQL > INSERT INTO walizka (pojemnosc, kolor, id_wlasciciela) VALUES ( 7, 'czerwony', 3 );
+Query OK, 1 row affected (0.0063 sec)
+ MySQL  localhost:3306 ssl  nauka  SQL > SELECT * FROM walizka;
++------------+-----------+----------+----------------+
+| id_walizki | pojemnosc | kolor    | id_wlasciciela |
++------------+-----------+----------+----------------+
+|          1 |         5 | zolty    |              1 |
+|          2 |         7 | czerwony |              3 |
++------------+-----------+----------+----------------+
