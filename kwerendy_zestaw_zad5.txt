@@ -1,0 +1,156 @@
+ DESC postac;
++------------+---------------------------------+------+-----+---------+----------------+
+| Field      | Type                            | Null | Key | Default | Extra          |
++------------+---------------------------------+------+-----+---------+----------------+
+| id_postaci | int                             | NO   | PRI | NULL    | auto_increment |
+| nazwa      | varchar(40)                     | YES  |     | NULL    |                |
+| rodzaj     | enum('wiking','ptak','kobieta') | YES  |     | NULL    |                |
+| data_ur    | date                            | YES  |     | NULL    |                |
+| wiek       | int unsigned                    | YES  |     | NULL    |                |
++------------+---------------------------------+------+-----+---------+----------------+
+5 rows in set (0.0019 sec)
+ MySQL  localhost:3306 ssl  nauka  SQL > INSERT INTO postac (nazwa, rodzaj, data_ur, wiek) VALUES
+                                      -> ('Leif', 'wiking', '840-05-12', 184),
+                                      -> ('Freydis', 'wiking', '855-11-30', 169),
+                                      -> ('Erik', 'wiking', '830-03-01', 194),
+                                      -> ('Astrid', 'wiking', '850-08-22', 174),
+                                      -> ('Gunnar', 'wiking', '865-02-14', 159);
+Query OK, 5 rows affected (0.0072 sec)
+
+Records: 5  Duplicates: 0  Warnings: 0
+
+ MySQL  localhost:3306 ssl  nauka  SQL > SELECT * FROM postac;
++------------+----------+---------+------------+------+
+| id_postaci | nazwa    | rodzaj  | data_ur    | wiek |
++------------+----------+---------+------------+------+
+|          1 | Bjorn    | wiking  | 1899-01-01 |   38 |
+|          2 | Drozd    | ptak    | 1899-02-02 |    1 |
+|          3 | Tesciowa | kobieta | 1732-02-02 |   88 |
+|          4 | Leif     | wiking  | 0840-05-12 |  184 |
+|          5 | Freydis  | wiking  | 0855-11-30 |  169 |
+|          6 | Erik     | wiking  | 0830-03-01 |  194 |
+|          7 | Astrid   | wiking  | 0850-08-22 |  174 |
+|          8 | Gunnar   | wiking  | 0865-02-14 |  159 |
++------------+----------+---------+------------+------+
+8 rows in set (0.0004 sec)
+ MySQL  localhost:3306 ssl  nauka  SQL > CREATE TABLE statek (
+                                      -> nazwa_statku VARCHAR(30) PRIMARY KEY,
+                                      -> rodzaj_statku ENUM( 'mały statek', 'średni statek', 'duży statek', 'ogromny statek', 'statek'),
+                                      -> data_wodowania DATE,
+                                      -> max_ladownosc INT UNSIGNED );
+Query OK, 0 rows affected (0.0155 sec)
+ MySQL  localhost:3306 ssl  nauka  SQL > DESC statek;
++----------------+-----------------------------------------------------------------------------+------+-----+---------+-------+
+| Field          | Type                                                                        | Null | Key | Default | Extra |
++----------------+-----------------------------------------------------------------------------+------+-----+---------+-------+
+| nazwa_statku   | varchar(30)                                                                 | NO   | PRI | NULL    |       |
+| rodzaj_statku  | enum('mały statek','średni statek','duży statek','ogromny statek','statek') | YES  |     | NULL    |       |
+| data_wodowania | date                                                                        | YES  |     | NULL    |       |
+| max_ladownosc  | int unsigned                                                                | YES  |     | NULL    |       |
++----------------+-----------------------------------------------------------------------------+------+-----+---------+-------+
+4 rows in set (0.0058 sec)
+ MySQL  localhost:3306 ssl  nauka  SQL > INSERT INTO statek (nazwa_statku, rodzaj_statku, data_wodowania, max_ladownosc)
+
+                                      -> VALUES
+                                      ->     ('Posejdon', 'duży statek', '2021-05-10', 30000),
+                                      ->     ('Ocean Explorer', 'średni statek', '1919-08-22', 15000);^C
+ MySQL  localhost:3306 ssl  nauka  SQL > INSERT INTO statek (nazwa_statku, rodzaj_statku, data_wodowania, max_ladownosc)
+                                      -> VALUES
+                                      ->     ('Posejdon', 'duży statek', '1900-05-10', 30000),
+                                      ->     ('Ocean Explorer', 'średni statek', '1900-08-22', 15000);
+Query OK, 2 rows affected (0.0033 sec)
+
+Records: 2  Duplicates: 0  Warnings: 0
+ MySQL  localhost:3306 ssl  nauka  SQL > ALTER TABLE postac ADD funkcja VARCHAR(30);
+Query OK, 0 rows affected (0.0151 sec)
+
+Records: 0  Duplicates: 0  Warnings: 0
+ MySQL  localhost:3306 ssl  nauka  SQL > INSERT INTO postac (funkcja) VALUES ('kapitan') WHERE id_postaci=1;
+ERROR: 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'WHERE id_postaci=1' at line 1
+ MySQL  localhost:3306 ssl  nauka  SQL > UPDATE postac SET funkcja='kapitan' WHERE id_postaci=1;
+Query OK, 1 row affected (0.0025 sec)
+
+Rows matched: 1  Changed: 1  Warnings: 0
+ MySQL  localhost:3306 ssl  nauka  SQL > SELECT * FROM postac;
++------------+----------+---------+------------+------+---------+
+| id_postaci | nazwa    | rodzaj  | data_ur    | wiek | funkcja |
++------------+----------+---------+------------+------+---------+
+|          1 | Bjorn    | wiking  | 1899-01-01 |   38 | kapitan |
+|          2 | Drozd    | ptak    | 1899-02-02 |    1 | NULL    |
+|          3 | Tesciowa | kobieta | 1732-02-02 |   88 | NULL    |
+|          4 | Leif     | wiking  | 0840-05-12 |  184 | NULL    |
+|          5 | Freydis  | wiking  | 0855-11-30 |  169 | NULL    |
+|          6 | Erik     | wiking  | 0830-03-01 |  194 | NULL    |
+|          7 | Astrid   | wiking  | 0850-08-22 |  174 | NULL    |
+|          8 | Gunnar   | wiking  | 0865-02-14 |  159 | NULL    |
++------------+----------+---------+------------+------+---------+
+8 rows in set (0.0004 sec)
+ MySQL  localhost:3306 ssl  nauka  SQL > ALTER TABLE postac ADD COLUMN id_statku INT;
+Query OK, 0 rows affected (0.0218 sec)
+
+ MySQL  localhost:3306 ssl  nauka  SQL > ALTER TABLE postac MODIFY COLUMN id_statku VARCHAR(30);
+Query OK, 8 rows affected (0.0354 sec)
+
+Records: 8  Duplicates: 0  Warnings: 0
+ MySQL  localhost:3306 ssl  nauka  SQL > ALTER TABLE postac ADD CONSTRAINT statek FOREIGN KEY (id_statku) REFERENCES statek(nazwa_statku);
+Query OK, 8 rows affected (0.0471 sec)
+
+Records: 8  Duplicates: 0  Warnings: 0
+ MySQL  localhost:3306 ssl  nauka  SQL > DESC postac;
++------------+---------------------------------+------+-----+---------+----------------+
+| Field      | Type                            | Null | Key | Default | Extra          |
++------------+---------------------------------+------+-----+---------+----------------+
+| id_postaci | int                             | NO   | PRI | NULL    | auto_increment |
+| nazwa      | varchar(40)                     | YES  |     | NULL    |                |
+| rodzaj     | enum('wiking','ptak','kobieta') | YES  |     | NULL    |                |
+| data_ur    | date                            | YES  |     | NULL    |                |
+| wiek       | int unsigned                    | YES  |     | NULL    |                |
+| funkcja    | varchar(30)                     | YES  |     | NULL    |                |
+| id_statku  | varchar(30)                     | YES  | MUL | NULL    |                |
++------------+---------------------------------+------+-----+---------+----------------+
+7 rows in set (0.0012 sec)
+ MySQL  localhost:3306 ssl  nauka  SQL > SELECT * FROM postac;
++------------+----------+---------+------------+------+---------+-----------+
+| id_postaci | nazwa    | rodzaj  | data_ur    | wiek | funkcja | id_statku |
++------------+----------+---------+------------+------+---------+-----------+
+|          1 | Bjorn    | wiking  | 1899-01-01 |   38 | kapitan | NULL      |
+|          2 | Drozd    | ptak    | 1899-02-02 |    1 | NULL    | NULL      |
+|          3 | Tesciowa | kobieta | 1732-02-02 |   88 | NULL    | NULL      |
+|          4 | Leif     | wiking  | 0840-05-12 |  184 | NULL    | NULL      |
+|          5 | Freydis  | wiking  | 0855-11-30 |  169 | NULL    | NULL      |
+|          6 | Erik     | wiking  | 0830-03-01 |  194 | NULL    | NULL      |
+|          7 | Astrid   | wiking  | 0850-08-22 |  174 | NULL    | NULL      |
+|          8 | Gunnar   | wiking  | 0865-02-14 |  159 | NULL    | NULL      |
++------------+----------+---------+------------+------+---------+-----------+
+8 rows in set (0.0004 sec)
+ MySQL  localhost:3306 ssl  nauka  SQL > select * from statek;
++----------------+---------------+----------------+---------------+
+| nazwa_statku   | rodzaj_statku | data_wodowania | max_ladownosc |
++----------------+---------------+----------------+---------------+
+| Ocean Explorer | średni statek | 1900-08-22     |         15000 |
+| Posejdon       | duży statek   | 1900-05-10     |         30000 |
++----------------+---------------+----------------+---------------+
+
+ MySQL  localhost:3306 ssl  nauka  SQL > UPDATE postac SET id_statku = 'Ocean Explorer' WHERE nazwa IN ('Bjorn', 'Leif', 'Freydis', 'Erik');
+Query OK, 4 rows affected (0.0024 sec)
+
+Rows matched: 4  Changed: 4  Warnings: 0
+ MySQL  localhost:3306 ssl  nauka  SQL > UPDATE postac SET id_statku = 'Posejdon' WHERE nazwa IN ('Astrid', 'Gunnar', 'Drozd');
+Query OK, 3 rows affected (0.0061 sec)
+
+Rows matched: 3  Changed: 3  Warnings: 0
+ MySQL  localhost:3306 ssl  nauka  SQL > SELECT * FROM postac;
++------------+----------+---------+------------+------+---------+----------------+
+| id_postaci | nazwa    | rodzaj  | data_ur    | wiek | funkcja | id_statku      |
++------------+----------+---------+------------+------+---------+----------------+
+|          1 | Bjorn    | wiking  | 1899-01-01 |   38 | kapitan | Ocean Explorer |
+|          2 | Drozd    | ptak    | 1899-02-02 |    1 | NULL    | Posejdon       |
+|          3 | Tesciowa | kobieta | 1732-02-02 |   88 | NULL    | NULL           |
+|          4 | Leif     | wiking  | 0840-05-12 |  184 | NULL    | Ocean Explorer |
+|          5 | Freydis  | wiking  | 0855-11-30 |  169 | NULL    | Ocean Explorer |
+|          6 | Erik     | wiking  | 0830-03-01 |  194 | NULL    | Ocean Explorer |
+|          7 | Astrid   | wiking  | 0850-08-22 |  174 | NULL    | Posejdon       |
+|          8 | Gunnar   | wiking  | 0865-02-14 |  159 | NULL    | Posejdon       |
++------------+----------+---------+------------+------+---------+----------------+
+8 rows in set (0.0003 sec)
+ MySQL  localhost:3306 ssl  nauka  SQL >
